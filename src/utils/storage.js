@@ -1,3 +1,5 @@
+import { isValidSleepEntries } from './sleepHelpers'
+
 const STORAGE_KEY = 'healthTrackingData'
 const FILE_HANDLE_KEY = 'healthTrackingFileHandle'
 
@@ -6,8 +8,14 @@ export function loadData() {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored) {
       const data = JSON.parse(stored)
+      const sleepDataIsValid = data.sleepEntries === undefined || isValidSleepEntries(data.sleepEntries)
+      const sleepEntries = sleepDataIsValid ? data.sleepEntries || [] : []
+      if (!sleepDataIsValid) {
+        console.error('Invalid sleep records in localStorage; ignoring sleep data.')
+      }
       return {
         moodEntries: data.moodEntries || [],
+        sleepEntries,
       }
     }
   } catch (error) {
@@ -15,12 +23,13 @@ export function loadData() {
   }
   return {
     moodEntries: [],
+    sleepEntries: [],
   }
 }
 
-export function saveData(moodEntries) {
+export function saveData(moodEntries, sleepEntries = []) {
   try {
-    const data = { moodEntries }
+    const data = { moodEntries, sleepEntries }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
   } catch (error) {
     console.error('Error saving to localStorage:', error)
