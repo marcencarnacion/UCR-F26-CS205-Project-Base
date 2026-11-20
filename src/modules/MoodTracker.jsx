@@ -40,11 +40,11 @@ function MoodTracker() {
     : null
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+    <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-4 sm:p-6 transition-colors">
+      <h2 className="text-2xl font-semibold text-gray-800 dark:text-slate-100 mb-4">
         Mood Tracker
       </h2>
-      <p className="text-gray-600 mb-4">
+      <p className="text-gray-600 dark:text-slate-300 mb-4">
         Select how you&apos;re feeling and then submit. Date and time are recorded automatically.
       </p>
 
@@ -56,13 +56,13 @@ function MoodTracker() {
             className={`flex-1 py-3 rounded-lg font-semibold border transition-colors ${
               selectedMood === mood
                 ? 'bg-indigo-600 text-white border-indigo-600'
-                : 'bg-gray-50 text-gray-800 border-gray-300 hover:bg-gray-100'
+                : 'bg-gray-50 text-gray-800 border-gray-300 hover:bg-gray-100 dark:bg-slate-700 dark:text-slate-100 dark:border-slate-600 dark:hover:bg-slate-600'
             }`}
           >
             <div className="text-lg">{mood}</div>
             <div
               className={`text-xs mt-1 ${
-                selectedMood === mood ? 'text-white' : 'text-gray-600'
+                selectedMood === mood ? 'text-white' : 'text-gray-600 dark:text-slate-300'
               }`}
             >
               {MOOD_LABELS[mood]}
@@ -77,19 +77,19 @@ function MoodTracker() {
         className={`w-full mb-6 py-2 px-4 rounded-lg font-medium transition-colors ${
           selectedMood
             ? 'bg-indigo-600 text-white hover:bg-indigo-700'
-            : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+            : 'bg-gray-200 text-gray-500 cursor-not-allowed dark:bg-slate-700 dark:text-slate-400'
         }`}
       >
         Save how I feel
       </button>
 
       {latestEntry && (
-        <div className="mb-6 p-4 bg-indigo-50 rounded-lg">
-          <p className="text-sm text-gray-600 mb-1">Last recorded mood:</p>
-          <p className="text-lg font-semibold text-indigo-700">
+        <div className="mb-6 p-4 bg-indigo-50 dark:bg-indigo-950/50 rounded-lg">
+          <p className="text-sm text-gray-600 dark:text-slate-300 mb-1">Last recorded mood:</p>
+          <p className="text-lg font-semibold text-indigo-700 dark:text-indigo-300">
             {latestEntry.mood} – {MOOD_LABELS[latestEntry.mood] || 'Mood'}
           </p>
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
             {latestEntry.date} at {latestEntry.time}
           </p>
         </div>
@@ -97,7 +97,7 @@ function MoodTracker() {
 
       <div className="space-y-2 max-h-64 overflow-y-auto">
         {moodEntries.length === 0 ? (
-          <p className="text-gray-500 text-center py-4">
+          <p className="text-gray-500 dark:text-slate-400 text-center py-4">
             No moods logged yet. Choose how you feel to get started.
           </p>
         ) : (
@@ -106,13 +106,13 @@ function MoodTracker() {
             .map((entry) => (
               <div
                 key={entry.id}
-                className="flex justify-between items-center p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                className="flex justify-between items-center gap-2 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors dark:bg-slate-700 dark:hover:bg-slate-600"
               >
                 <div>
-                  <span className="font-medium text-gray-800">
+                  <span className="font-medium text-gray-800 dark:text-slate-100">
                     {entry.mood} – {MOOD_LABELS[entry.mood] || 'Mood'}
                   </span>
-                  <span className="text-gray-500 text-sm ml-2">
+                  <span className="text-gray-500 text-sm ml-2 dark:text-slate-400">
                     • {entry.date} at {entry.time}
                   </span>
                 </div>
