@@ -1,11 +1,13 @@
 import { createContext, useContext, useState, useEffect, useRef } from 'react'
 import { loadData, saveData, saveFileHandleInfo, getFileHandleInfo } from '../utils/storage'
 import { createFile, openFile, writeFile, readFile } from '../utils/fileOperations'
+import { isValidSleepEntries } from '../utils/sleepHelpers'
 
 const HealthDataContext = createContext()
 
 export function HealthDataProvider({ children }) {
   const [moodEntries, setMoodEntries] = useState([])
+  const [sleepEntries, setSleepEntries] = useState([])
   const [isLoaded, setIsLoaded] = useState(false)
   const [fileHandle, setFileHandle] = useState(null)
   const [fileStatus, setFileStatus] = useState('none') // 'none', 'saving', 'saved', 'error'
@@ -17,6 +19,7 @@ export function HealthDataProvider({ children }) {
       // Load from localStorage first
       const loaded = loadData()
       setMoodEntries(loaded.moodEntries)
+      setSleepEntries(loaded.sleepEntries)
       setIsLoaded(true)
       
       // Try to set up file auto-save
@@ -37,7 +40,9 @@ export function HealthDataProvider({ children }) {
             
             if (!storageDate || (fileDate && fileDate > storageDate)) {
               setMoodEntries(fileData.moodEntries)
-              saveData(fileData.moodEntries)
+              const fileSleepEntries = isValidSleepEntries(fileData.sleepEntries) ? fileData.sleepEntries : []
+              setSleepEntries(fileSleepEntries)
+              saveData(fileData.moodEntries, fileSleepEntries)
             }
           }
         }
@@ -50,6 +55,7 @@ export function HealthDataProvider({ children }) {
           saveFileHandleInfo(handle)
           await writeFile(handle, {
             moodEntries: loaded.moodEntries,
+            sleepEntries: loaded.sleepEntries,
             lastSaved: new Date().toISOString()
           })
         }
@@ -62,10 +68,10 @@ export function HealthDataProvider({ children }) {
   // Auto-save to localStorage and file when data changes
   useEffect(() => {
     if (isLoaded) {
-      saveData(moodEntries)
+      saveData(moodEntries, sleepEntries)
       saveToFile()
     }
-  }, [moodEntries, isLoaded])
+  }, [moodEntries, sleepEntries, isLoaded])
 
   async function saveToFile() {
     const handle = fileHandleRef.current
@@ -74,6 +80,7 @@ export function HealthDataProvider({ children }) {
     setFileStatus('saving')
     const success = await writeFile(handle, {
       moodEntries,
+      sleepEntries,
       lastSaved: new Date().toISOString()
     })
     
@@ -108,7 +115,9 @@ export function HealthDataProvider({ children }) {
       const data = await readFile(handle)
       if (data?.moodEntries) {
         setMoodEntries(data.moodEntries)
-        saveData(data.moodEntries)
+        const fileSleepEntries = isValidSleepEntries(data.sleepEntries) ? data.sleepEntries : []
+        setSleepEntries(fileSleepEntries)
+        saveData(data.moodEntries, fileSleepEntries)
         return true
       }
     }
@@ -127,9 +136,24 @@ export function HealthDataProvider({ children }) {
     setMoodEntries(moodEntries)
   }
 
+  const addSleepEntry = (entry) => {
+    setSleepEntries((entries) => [...entries, entry])
+  }
+
+  const updateSleepEntry = (entry) => {
+    setSleepEntries((entries) => entries.map((current) => (
+      current.id === entry.id ? entry : current
+    )))
+  }
+
+  const deleteSleepEntry = (id) => {
+    setSleepEntries((entries) => entries.filter((entry) => entry.id !== id))
+  }
+
   const exportData = () => {
     const data = {
       moodEntries,
+      sleepEntries,
       exportedAt: new Date().toISOString(),
     }
     return JSON.stringify(data, null, 2)
@@ -138,8 +162,10 @@ export function HealthDataProvider({ children }) {
   const importData = (jsonString) => {
     try {
       const data = JSON.parse(jsonString)
-      if (data.moodEntries && Array.isArray(data.moodEntries)) {
-        setAllData(data.moodEntries)
+      if (Array.isArray(data.moodEntries)
+        && (data.sleepEntries === undefined || isValidSleepEntries(data.sleepEntries))) {
+        setMoodEntries(data.moodEntries)
+        setSleepEntries(data.sleepEntries || [])
         return true
       }
       return false
@@ -153,8 +179,12 @@ export function HealthDataProvider({ children }) {
     <HealthDataContext.Provider
       value={{
         moodEntries,
+        sleepEntries,
         addMoodEntry,
         deleteMoodEntry,
+        addSleepEntry,
+        updateSleepEntry,
+        deleteSleepEntry,
         exportData,
         importData,
         setAllData,

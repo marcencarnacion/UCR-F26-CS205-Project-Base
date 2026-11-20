@@ -61,7 +61,7 @@ function FileManager() {
 
   const handleClear = () => {
     if (window.confirm('Are you sure you want to clear all data? This cannot be undone.')) {
-      importData(JSON.stringify({ moodEntries: [] }))
+      importData(JSON.stringify({ moodEntries: [], sleepEntries: [] }))
       setImportText('')
       setImportSuccess(true)
       setTimeout(() => setImportSuccess(false), 3000)
@@ -173,7 +173,7 @@ function FileManager() {
               id="importText"
               value={importText}
               onChange={(e) => setImportText(e.target.value)}
-              placeholder='{"moodEntries": [...] }'
+              placeholder='{"moodEntries": [...], "sleepEntries": [...] }'
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-mono text-sm bg-white text-gray-900 placeholder:text-gray-400 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-600"
               rows="8"
             />
@@ -221,6 +221,16 @@ function FileManager() {
       "timestamp": "2024-01-15T12:00:00.000Z",
       "time": "12:00 PM",
       "date": "1/15/2024"
+    }
+  ],
+  "sleepEntries": [
+    {
+      "id": 1234567891,
+      "date": "2024-01-15",
+      "bedtime": "22:30",
+      "wakeTime": "06:30",
+      "durationHours": 8,
+      "quality": 4
     }
   ]
 }`}
