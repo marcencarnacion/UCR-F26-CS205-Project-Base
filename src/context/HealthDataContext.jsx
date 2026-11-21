@@ -7,6 +7,11 @@ import {
   isValidWaterEntries,
   isValidWaterGoal,
 } from '../utils/waterUtils'
+import {
+  DEFAULT_EXERCISE_GOAL_MINUTES,
+  isValidExerciseEntries,
+  isValidExerciseGoal,
+} from '../utils/exerciseUtils'
 
 const HealthDataContext = createContext()
 
@@ -15,6 +20,8 @@ export function HealthDataProvider({ children }) {
   const [sleepEntries, setSleepEntries] = useState([])
   const [waterEntries, setWaterEntries] = useState([])
   const [waterGoal, setWaterGoalState] = useState(DEFAULT_WATER_GOAL)
+  const [exerciseEntries, setExerciseEntries] = useState([])
+  const [exerciseGoalMinutes, setExerciseGoalMinutesState] = useState(DEFAULT_EXERCISE_GOAL_MINUTES)
   const [isLoaded, setIsLoaded] = useState(false)
   const [fileHandle, setFileHandle] = useState(null)
   const [fileStatus, setFileStatus] = useState('none') // 'none', 'saving', 'saved', 'error'
@@ -29,6 +36,8 @@ export function HealthDataProvider({ children }) {
       setSleepEntries(loaded.sleepEntries)
       setWaterEntries(loaded.waterEntries)
       setWaterGoalState(loaded.waterGoal)
+      setExerciseEntries(loaded.exerciseEntries)
+      setExerciseGoalMinutesState(loaded.exerciseGoalMinutes)
       setIsLoaded(true)
       
       // Try to set up file auto-save
@@ -52,10 +61,23 @@ export function HealthDataProvider({ children }) {
               const fileSleepEntries = isValidSleepEntries(fileData.sleepEntries) ? fileData.sleepEntries : []
               const fileWaterEntries = isValidWaterEntries(fileData.waterEntries) ? fileData.waterEntries : []
               const fileWaterGoal = isValidWaterGoal(fileData.waterGoal) ? fileData.waterGoal : DEFAULT_WATER_GOAL
+              const fileExerciseEntries = isValidExerciseEntries(fileData.exerciseEntries) ? fileData.exerciseEntries : []
+              const fileExerciseGoal = isValidExerciseGoal(fileData.exerciseGoalMinutes)
+                ? fileData.exerciseGoalMinutes
+                : DEFAULT_EXERCISE_GOAL_MINUTES
               setSleepEntries(fileSleepEntries)
               setWaterEntries(fileWaterEntries)
               setWaterGoalState(fileWaterGoal)
-              saveData(fileData.moodEntries, fileSleepEntries, fileWaterEntries, fileWaterGoal)
+              setExerciseEntries(fileExerciseEntries)
+              setExerciseGoalMinutesState(fileExerciseGoal)
+              saveData(
+                fileData.moodEntries,
+                fileSleepEntries,
+                fileWaterEntries,
+                fileWaterGoal,
+                fileExerciseEntries,
+                fileExerciseGoal,
+              )
             }
           }
         }
@@ -71,6 +93,8 @@ export function HealthDataProvider({ children }) {
             sleepEntries: loaded.sleepEntries,
             waterEntries: loaded.waterEntries,
             waterGoal: loaded.waterGoal,
+            exerciseEntries: loaded.exerciseEntries,
+            exerciseGoalMinutes: loaded.exerciseGoalMinutes,
             lastSaved: new Date().toISOString()
           })
         }
@@ -83,10 +107,17 @@ export function HealthDataProvider({ children }) {
   // Auto-save to localStorage and file when data changes
   useEffect(() => {
     if (isLoaded) {
-      saveData(moodEntries, sleepEntries, waterEntries, waterGoal)
+      saveData(
+        moodEntries,
+        sleepEntries,
+        waterEntries,
+        waterGoal,
+        exerciseEntries,
+        exerciseGoalMinutes,
+      )
       saveToFile()
     }
-  }, [moodEntries, sleepEntries, waterEntries, waterGoal, isLoaded])
+  }, [moodEntries, sleepEntries, waterEntries, waterGoal, exerciseEntries, exerciseGoalMinutes, isLoaded])
 
   async function saveToFile() {
     const handle = fileHandleRef.current
@@ -98,6 +129,8 @@ export function HealthDataProvider({ children }) {
       sleepEntries,
       waterEntries,
       waterGoal,
+      exerciseEntries,
+      exerciseGoalMinutes,
       lastSaved: new Date().toISOString()
     })
     
@@ -135,10 +168,23 @@ export function HealthDataProvider({ children }) {
         const fileSleepEntries = isValidSleepEntries(data.sleepEntries) ? data.sleepEntries : []
         const fileWaterEntries = isValidWaterEntries(data.waterEntries) ? data.waterEntries : []
         const fileWaterGoal = isValidWaterGoal(data.waterGoal) ? data.waterGoal : DEFAULT_WATER_GOAL
+        const fileExerciseEntries = isValidExerciseEntries(data.exerciseEntries) ? data.exerciseEntries : []
+        const fileExerciseGoal = isValidExerciseGoal(data.exerciseGoalMinutes)
+          ? data.exerciseGoalMinutes
+          : DEFAULT_EXERCISE_GOAL_MINUTES
         setSleepEntries(fileSleepEntries)
         setWaterEntries(fileWaterEntries)
         setWaterGoalState(fileWaterGoal)
-        saveData(data.moodEntries, fileSleepEntries, fileWaterEntries, fileWaterGoal)
+        setExerciseEntries(fileExerciseEntries)
+        setExerciseGoalMinutesState(fileExerciseGoal)
+        saveData(
+          data.moodEntries,
+          fileSleepEntries,
+          fileWaterEntries,
+          fileWaterGoal,
+          fileExerciseEntries,
+          fileExerciseGoal,
+        )
         return true
       }
     }
@@ -189,12 +235,32 @@ export function HealthDataProvider({ children }) {
     setWaterGoalState(goal)
   }
 
+  const addExerciseEntry = (entry) => {
+    setExerciseEntries((entries) => [...entries, entry])
+  }
+
+  const updateExerciseEntry = (entry) => {
+    setExerciseEntries((entries) => entries.map((current) => (
+      current.id === entry.id ? entry : current
+    )))
+  }
+
+  const deleteExerciseEntry = (id) => {
+    setExerciseEntries((entries) => entries.filter((entry) => entry.id !== id))
+  }
+
+  const setExerciseGoalMinutes = (goal) => {
+    setExerciseGoalMinutesState(goal)
+  }
+
   const exportData = () => {
     const data = {
       moodEntries,
       sleepEntries,
       waterEntries,
       waterGoal,
+      exerciseEntries,
+      exerciseGoalMinutes,
       exportedAt: new Date().toISOString(),
     }
     return JSON.stringify(data, null, 2)
@@ -206,11 +272,15 @@ export function HealthDataProvider({ children }) {
       if (Array.isArray(data.moodEntries)
         && (data.sleepEntries === undefined || isValidSleepEntries(data.sleepEntries))
         && (data.waterEntries === undefined || isValidWaterEntries(data.waterEntries))
-        && (data.waterGoal === undefined || isValidWaterGoal(data.waterGoal))) {
+        && (data.waterGoal === undefined || isValidWaterGoal(data.waterGoal))
+        && (data.exerciseEntries === undefined || isValidExerciseEntries(data.exerciseEntries))
+        && (data.exerciseGoalMinutes === undefined || isValidExerciseGoal(data.exerciseGoalMinutes))) {
         setMoodEntries(data.moodEntries)
         setSleepEntries(data.sleepEntries || [])
         setWaterEntries(data.waterEntries || [])
         setWaterGoalState(data.waterGoal || DEFAULT_WATER_GOAL)
+        setExerciseEntries(data.exerciseEntries || [])
+        setExerciseGoalMinutesState(data.exerciseGoalMinutes ?? DEFAULT_EXERCISE_GOAL_MINUTES)
         return true
       }
       return false
@@ -227,6 +297,8 @@ export function HealthDataProvider({ children }) {
         sleepEntries,
         waterEntries,
         waterGoal,
+        exerciseEntries,
+        exerciseGoalMinutes,
         addMoodEntry,
         deleteMoodEntry,
         addSleepEntry,
@@ -236,6 +308,10 @@ export function HealthDataProvider({ children }) {
         updateWaterEntry,
         deleteWaterEntry,
         setWaterGoal,
+        addExerciseEntry,
+        updateExerciseEntry,
+        deleteExerciseEntry,
+        setExerciseGoalMinutes,
         exportData,
         importData,
         setAllData,

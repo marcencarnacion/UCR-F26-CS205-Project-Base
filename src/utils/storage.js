@@ -1,5 +1,10 @@
 import { isValidSleepEntries } from './sleepHelpers'
 import { DEFAULT_WATER_GOAL, isValidWaterEntries, isValidWaterGoal } from './waterUtils'
+import {
+  DEFAULT_EXERCISE_GOAL_MINUTES,
+  isValidExerciseEntries,
+  isValidExerciseGoal,
+} from './exerciseUtils'
 
 const STORAGE_KEY = 'healthTrackingData'
 const FILE_HANDLE_KEY = 'healthTrackingFileHandle'
@@ -19,11 +24,21 @@ export function loadData() {
       if (!waterDataIsValid) {
         console.error('Invalid water records in localStorage; ignoring water data.')
       }
+      const exerciseDataIsValid = data.exerciseEntries === undefined
+        || isValidExerciseEntries(data.exerciseEntries)
+      const exerciseEntries = exerciseDataIsValid ? data.exerciseEntries || [] : []
+      if (!exerciseDataIsValid) {
+        console.error('Invalid exercise records in localStorage; ignoring exercise data.')
+      }
       return {
         moodEntries: data.moodEntries || [],
         sleepEntries,
         waterEntries,
         waterGoal: isValidWaterGoal(data.waterGoal) ? data.waterGoal : DEFAULT_WATER_GOAL,
+        exerciseEntries,
+        exerciseGoalMinutes: isValidExerciseGoal(data.exerciseGoalMinutes)
+          ? data.exerciseGoalMinutes
+          : DEFAULT_EXERCISE_GOAL_MINUTES,
       }
     }
   } catch (error) {
@@ -34,6 +49,8 @@ export function loadData() {
     sleepEntries: [],
     waterEntries: [],
     waterGoal: DEFAULT_WATER_GOAL,
+    exerciseEntries: [],
+    exerciseGoalMinutes: DEFAULT_EXERCISE_GOAL_MINUTES,
   }
 }
 
@@ -42,9 +59,18 @@ export function saveData(
   sleepEntries = [],
   waterEntries = [],
   waterGoal = DEFAULT_WATER_GOAL,
+  exerciseEntries = [],
+  exerciseGoalMinutes = DEFAULT_EXERCISE_GOAL_MINUTES,
 ) {
   try {
-    const data = { moodEntries, sleepEntries, waterEntries, waterGoal }
+    const data = {
+      moodEntries,
+      sleepEntries,
+      waterEntries,
+      waterGoal,
+      exerciseEntries,
+      exerciseGoalMinutes,
+    }
     localStorage.setItem(STORAGE_KEY, JSON.stringify(data))
   } catch (error) {
     console.error('Error saving to localStorage:', error)

@@ -66,6 +66,8 @@ function FileManager() {
         sleepEntries: [],
         waterEntries: [],
         waterGoal: { amount: 64, unit: 'oz' },
+        exerciseEntries: [],
+        exerciseGoalMinutes: 150,
       }))
       setImportText('')
       setImportSuccess(true)
@@ -178,7 +180,7 @@ function FileManager() {
               id="importText"
               value={importText}
               onChange={(e) => setImportText(e.target.value)}
-              placeholder='{"moodEntries": [...], "sleepEntries": [...], "waterEntries": [...], "waterGoal": {...} }'
+              placeholder='{"moodEntries": [...], "sleepEntries": [...], "waterEntries": [...], "waterGoal": {...}, "exerciseEntries": [...], "exerciseGoalMinutes": 150 }'
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-mono text-sm bg-white text-gray-900 placeholder:text-gray-400 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-600"
               rows="8"
             />
@@ -251,7 +253,20 @@ function FileManager() {
   "waterGoal": {
     "amount": 64,
     "unit": "oz"
-  }
+  },
+  "exerciseEntries": [
+    {
+      "id": 1234567893,
+      "date": "2024-01-15",
+      "type": "Running",
+      "durationMinutes": 30,
+      "distance": 3,
+      "distanceUnit": "mi",
+      "calories": 250,
+      "notes": "Easy afternoon run"
+    }
+  ],
+  "exerciseGoalMinutes": 150
 }`}
           </pre>
         </div>
