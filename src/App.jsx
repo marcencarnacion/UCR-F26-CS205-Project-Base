@@ -7,6 +7,7 @@ import HistoryView from './components/HistoryView'
 import FileManager from './components/FileManager'
 import { ThemeProvider, useTheme } from './context/ThemeContext'
 import SleepTracker from './modules/SleepTracker'
+import WaterTracker from './modules/WaterTracker'
 
 function AppContent() {
   const [activeTab, setActiveTab] = useState('dashboard')
@@ -70,6 +71,16 @@ function AppContent() {
                 Sleep
               </button>
               <button
+                onClick={() => setActiveTab('water')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'water'
+                    ? 'border-indigo-500 text-indigo-600 dark:border-indigo-400 dark:text-indigo-300'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:border-slate-600'
+                }`}
+              >
+                Water
+              </button>
+              <button
                 onClick={() => setActiveTab('data')}
                 className={`py-4 px-1 border-b-2 font-medium text-sm ${
                   activeTab === 'data'
@@ -98,6 +109,10 @@ function AppContent() {
 
           {activeTab === 'sleep' && (
             <SleepTracker />
+          )}
+
+          {activeTab === 'water' && (
+            <WaterTracker />
           )}
 
           {activeTab === 'data' && (
