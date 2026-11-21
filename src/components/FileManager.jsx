@@ -61,7 +61,12 @@ function FileManager() {
 
   const handleClear = () => {
     if (window.confirm('Are you sure you want to clear all data? This cannot be undone.')) {
-      importData(JSON.stringify({ moodEntries: [], sleepEntries: [] }))
+      importData(JSON.stringify({
+        moodEntries: [],
+        sleepEntries: [],
+        waterEntries: [],
+        waterGoal: { amount: 64, unit: 'oz' },
+      }))
       setImportText('')
       setImportSuccess(true)
       setTimeout(() => setImportSuccess(false), 3000)
@@ -173,7 +178,7 @@ function FileManager() {
               id="importText"
               value={importText}
               onChange={(e) => setImportText(e.target.value)}
-              placeholder='{"moodEntries": [...], "sleepEntries": [...] }'
+              placeholder='{"moodEntries": [...], "sleepEntries": [...], "waterEntries": [...], "waterGoal": {...} }'
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent font-mono text-sm bg-white text-gray-900 placeholder:text-gray-400 dark:bg-slate-900 dark:text-slate-100 dark:border-slate-600"
               rows="8"
             />
@@ -232,7 +237,21 @@ function FileManager() {
       "durationHours": 8,
       "quality": 4
     }
-  ]
+  ],
+  "waterEntries": [
+    {
+      "id": 1234567892,
+      "date": "2024-01-15",
+      "time": "10:30",
+      "amount": 16,
+      "unit": "oz",
+      "amountMl": 473.176472
+    }
+  ],
+  "waterGoal": {
+    "amount": 64,
+    "unit": "oz"
+  }
 }`}
           </pre>
         </div>
