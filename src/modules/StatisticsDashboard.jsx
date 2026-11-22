@@ -167,7 +167,7 @@ function StatisticsDashboard() {
               type="checkbox"
               checked={includeDemo}
               onChange={(event) => setIncludeDemo(event.target.checked)}
-              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900"
+              className="h-4 w-4 rounded border-gray-300 accent-indigo-600 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900"
             />
             Include demo records
           </label>
@@ -270,7 +270,7 @@ function StatisticsDashboard() {
             </article>
             <article className="rounded-lg bg-gray-50 p-4 dark:bg-slate-700">
               <h3 className="font-semibold text-gray-800 dark:text-slate-100">Average sleep quality</h3>
-              <p className="mt-1 text-2xl font-bold text-sky-700 dark:text-sky-300">
+              <p className="mt-1 text-2xl font-bold text-indigo-700 dark:text-indigo-300">
                 {summary.averageSleepQuality === null ? '—' : `${summary.averageSleepQuality.toFixed(2)} / 5`}
               </p>
               <p className="text-xs text-gray-500 dark:text-slate-400">
@@ -290,7 +290,7 @@ function StatisticsDashboard() {
             </article>
             <article className="rounded-lg bg-gray-50 p-4 dark:bg-slate-700">
               <h3 className="font-semibold text-gray-800 dark:text-slate-100">Exercise goal progress</h3>
-              <p className="mt-1 text-2xl font-bold text-violet-700 dark:text-violet-300">
+              <p className="mt-1 text-2xl font-bold text-indigo-700 dark:text-indigo-300">
                 {summary.exerciseGoalMinutes
                   ? `${summary.currentWeekExerciseMinutes} / ${summary.exerciseGoalMinutes} min`
                   : 'Goal unavailable'}
@@ -306,7 +306,7 @@ function StatisticsDashboard() {
                   aria-valuetext={`${summary.currentWeekExerciseMinutes} of ${summary.exerciseGoalMinutes} minutes`}
                 >
                   <div
-                    className="h-full rounded-full bg-violet-500"
+                    className="h-full rounded-full bg-indigo-600"
                     style={{ width: `${Math.min(exerciseGoalPercent, 100)}%` }}
                   />
                 </div>

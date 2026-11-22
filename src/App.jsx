@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { HealthDataProvider } from './context/HealthDataContext'
+import ThemeSettings from './components/ThemeSettings'
 import MoodTracker from './modules/MoodTracker'
 import DailyGraph from './components/DailyGraph'
 import WeeklyGraph from './components/WeeklyGraph'
 import HistoryView from './components/HistoryView'
 import FileManager from './components/FileManager'
-import { ThemeProvider, useTheme } from './context/ThemeContext'
+import { ThemeProvider } from './context/ThemeContext'
 import SleepTracker from './modules/SleepTracker'
 import WaterTracker from './modules/WaterTracker'
 import ExerciseTracker from './modules/ExerciseTracker'
@@ -14,14 +15,13 @@ import StatisticsDashboard from './modules/StatisticsDashboard'
 
 function AppContent() {
   const [activeTab, setActiveTab] = useState('dashboard')
-  const { theme, toggleTheme } = useTheme()
 
   return (
     <HealthDataProvider>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 transition-colors dark:from-slate-950 dark:to-slate-900">
+      <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-indigo-100 transition-colors dark:from-slate-950 dark:to-slate-900">
         <div className="container mx-auto px-4 py-6 sm:py-8 max-w-7xl">
-          <header className="mb-8 flex items-start justify-between gap-4">
-            <div>
+          <header className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+            <div className="min-w-0">
               <h1 className="text-3xl sm:text-4xl font-bold text-gray-800 dark:text-slate-100 mb-2">
                 Mood Tracking App
               </h1>
@@ -29,16 +29,7 @@ function AppContent() {
                 Track how you feel over time with a simple 1–5 mood scale
               </p>
             </div>
-            <button
-              type="button"
-              onClick={toggleTheme}
-              className="shrink-0 min-w-11 h-11 px-3 rounded-lg border border-gray-300 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700 dark:focus:ring-offset-slate-950"
-              aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-              aria-pressed={theme === 'dark'}
-              title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-            >
-              <span aria-hidden="true">{theme === 'dark' ? '☀️' : '🌙'}</span>
-            </button>
+            <ThemeSettings />
           </header>
 
           <div className="mb-6 border-b border-gray-200 dark:border-slate-700">

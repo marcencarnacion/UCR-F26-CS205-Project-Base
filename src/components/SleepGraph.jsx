@@ -73,7 +73,7 @@ function SleepGraph() {
             formatter={(value) => [`${value} hours`, 'Sleep']}
             labelFormatter={(_, payload) => payload?.[0]?.payload?.date || ''}
           />
-          <Bar dataKey="duration" fill="#6366f1" name="Sleep duration" />
+          <Bar dataKey="duration" fill="var(--accent-chart-color)" name="Sleep duration" />
         </BarChart>
       </ResponsiveContainer>
     </section>

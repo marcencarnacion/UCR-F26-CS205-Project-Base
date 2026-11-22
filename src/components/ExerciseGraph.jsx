@@ -50,7 +50,7 @@ function ExerciseGraph({ weeklyData }) {
             formatter={(value) => [`${value} minutes`, 'Exercise']}
             labelFormatter={(_, payload) => payload?.[0]?.payload?.date || ''}
           />
-          <Bar dataKey="durationMinutes" fill="#8b5cf6" name="Exercise duration" />
+          <Bar dataKey="durationMinutes" fill="var(--accent-chart-color)" name="Exercise duration" />
         </BarChart>
       </ResponsiveContainer>
     </section>

@@ -49,7 +49,7 @@ function WeeklyGraph() {
           <XAxis dataKey="day" tick={{ fill: chartText }} />
           <YAxis domain={[0, 5]} ticks={[0, 1, 2, 3, 4, 5]} tick={{ fill: chartText }} />
           <Tooltip contentStyle={tooltipStyle} labelStyle={{ color: chartText }} />
-          <Bar dataKey="averageMood" fill="#6366f1" name="Average Mood (1–5)" />
+          <Bar dataKey="averageMood" fill="var(--accent-chart-color)" name="Average Mood (1–5)" />
         </BarChart>
       </ResponsiveContainer>
     </div>
