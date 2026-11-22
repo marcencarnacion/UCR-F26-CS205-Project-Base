@@ -1,12 +1,34 @@
 import { useState, useRef, useEffect } from 'react'
 import { useHealthData } from '../context/HealthDataContext'
+import { createDemoData } from '../utils/demoDataGenerator'
 
 function FileManager() {
-  const { exportData, importData, setupFileHandle, loadFromFile, fileHandle, fileStatus } = useHealthData()
+  const {
+    moodEntries,
+    sleepEntries,
+    waterEntries,
+    exerciseEntries,
+    exportData,
+    importData,
+    setupFileHandle,
+    loadFromFile,
+    fileHandle,
+    fileStatus,
+    addDemoData,
+    removeDemoData,
+  } = useHealthData()
   const [importText, setImportText] = useState('')
   const [importError, setImportError] = useState('')
   const [importSuccess, setImportSuccess] = useState(false)
+  const [demoDays, setDemoDays] = useState('30')
+  const [demoStatus, setDemoStatus] = useState('')
   const fileInputRef = useRef(null)
+  const demoRecordCount = [
+    ...moodEntries,
+    ...sleepEntries,
+    ...waterEntries,
+    ...exerciseEntries,
+  ].filter((entry) => entry?.isDemo).length
 
   useEffect(() => {
     if (fileStatus === 'saved') {
@@ -75,6 +97,43 @@ function FileManager() {
     }
   }
 
+  const handleGenerateDemoData = () => {
+    const days = Number(demoDays)
+    if (!window.confirm(
+      `Generate up to ${days} days of demo data? Existing user records will be kept. Demo records already present for a date will not be duplicated.`,
+    )) {
+      return
+    }
+
+    const generated = createDemoData(days, {
+      moodEntries,
+      sleepEntries,
+      waterEntries,
+      exerciseEntries,
+    })
+    const counts = Object.values(generated).map((entries) => entries.length)
+    const total = counts.reduce((sum, count) => sum + count, 0)
+    if (total === 0) {
+      setDemoStatus('No new demo records were needed; demo data already exists for the selected dates.')
+      return
+    }
+
+    addDemoData(generated)
+    setDemoStatus(
+      `Added ${counts[0]} mood, ${counts[1]} sleep, ${counts[2]} water, and ${counts[3]} exercise demo records.`,
+    )
+  }
+
+  const handleRemoveDemoData = () => {
+    if (!demoRecordCount) {
+      return
+    }
+    if (window.confirm(`Remove all ${demoRecordCount} generated demo records? Your real records will be kept.`)) {
+      removeDemoData()
+      setDemoStatus('Demo records removed. Your real records were kept.')
+    }
+  }
+
   return (
     <div className="bg-white dark:bg-slate-800 rounded-lg shadow-lg p-4 sm:p-6 transition-colors">
       <h2 className="text-2xl font-semibold text-gray-800 dark:text-slate-100 mb-4">
@@ -82,6 +141,50 @@ function FileManager() {
       </h2>
 
       <div className="space-y-4">
+        <section className="rounded-lg border border-violet-200 bg-violet-50 p-4 dark:border-violet-900 dark:bg-violet-950/30">
+          <h3 className="text-lg font-medium text-violet-900 dark:text-violet-100">Demo Data Generator</h3>
+          <p className="mb-3 text-sm text-violet-800 dark:text-violet-200">
+            Add historical sample data to explore the calendar, history, and graphs. Existing real records are preserved; generated records are tagged as Demo.
+          </p>
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <label htmlFor="demo-data-days" className="flex-1 text-sm font-medium text-gray-700 dark:text-slate-200">
+              Historical range
+              <select
+                id="demo-data-days"
+                value={demoDays}
+                onChange={(event) => setDemoDays(event.target.value)}
+                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+              >
+                <option value="7">7 days</option>
+                <option value="30">30 days</option>
+                <option value="60">60 days</option>
+                <option value="90">90 days</option>
+              </select>
+            </label>
+            <button
+              type="button"
+              onClick={handleGenerateDemoData}
+              className="self-end rounded-lg bg-violet-600 px-4 py-2 font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+            >
+              Generate Demo Data
+            </button>
+          </div>
+          <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm text-violet-900 dark:text-violet-200" aria-live="polite">
+              {demoRecordCount} demo records currently saved.
+              {demoStatus && <span className="block">{demoStatus}</span>}
+            </p>
+            <button
+              type="button"
+              onClick={handleRemoveDemoData}
+              disabled={!demoRecordCount}
+              className="rounded-lg border border-violet-400 px-3 py-2 text-sm font-medium text-violet-900 hover:bg-violet-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-violet-700 dark:text-violet-200 dark:hover:bg-violet-900/50"
+            >
+              Remove Demo Data
+            </button>
+          </div>
+        </section>
+
         <div>
           <h3 className="text-lg font-medium text-gray-700 dark:text-slate-200 mb-2">Auto-Save Status</h3>
           <p className="text-sm text-gray-600 dark:text-slate-300 mb-3">

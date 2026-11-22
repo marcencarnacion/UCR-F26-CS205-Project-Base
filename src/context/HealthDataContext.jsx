@@ -253,6 +253,20 @@ export function HealthDataProvider({ children }) {
     setExerciseGoalMinutesState(goal)
   }
 
+  const addDemoData = (demoData) => {
+    setMoodEntries((entries) => [...entries, ...demoData.moodEntries])
+    setSleepEntries((entries) => [...entries, ...demoData.sleepEntries])
+    setWaterEntries((entries) => [...entries, ...demoData.waterEntries])
+    setExerciseEntries((entries) => [...entries, ...demoData.exerciseEntries])
+  }
+
+  const removeDemoData = () => {
+    setMoodEntries((entries) => entries.filter((entry) => !entry?.isDemo))
+    setSleepEntries((entries) => entries.filter((entry) => !entry?.isDemo))
+    setWaterEntries((entries) => entries.filter((entry) => !entry?.isDemo))
+    setExerciseEntries((entries) => entries.filter((entry) => !entry?.isDemo))
+  }
+
   const exportData = () => {
     const data = {
       moodEntries,
@@ -312,6 +326,8 @@ export function HealthDataProvider({ children }) {
         updateExerciseEntry,
         deleteExerciseEntry,
         setExerciseGoalMinutes,
+        addDemoData,
+        removeDemoData,
         exportData,
         importData,
         setAllData,

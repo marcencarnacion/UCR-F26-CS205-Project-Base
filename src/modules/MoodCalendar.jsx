@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import { useHealthData } from '../context/HealthDataContext'
+import DemoBadge from '../components/DemoBadge'
 import {
   getDailyMoodMap,
   getLocalDateKey,
@@ -343,6 +344,7 @@ function MoodCalendar() {
                   <p className="font-semibold text-gray-800 dark:text-slate-100">
                     Mood {entry.mood} — {MOOD_LABELS[entry.mood] || 'Mood'}
                   </p>
+                  {entry.isDemo && <DemoBadge />}
                   <time
                     dateTime={entry.timestamp || undefined}
                     className="text-sm text-gray-600 dark:text-slate-300"

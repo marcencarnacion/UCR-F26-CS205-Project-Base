@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useHealthData } from '../context/HealthDataContext'
 import { getTodayFormatted } from '../utils/helpers'
+import DemoBadge from '../components/DemoBadge'
 
 const MOOD_LABELS = {
   1: 'Very Low',
@@ -112,6 +113,7 @@ function MoodTracker() {
                   <span className="font-medium text-gray-800 dark:text-slate-100">
                     {entry.mood} – {MOOD_LABELS[entry.mood] || 'Mood'}
                   </span>
+                  {entry.isDemo && <DemoBadge />}
                   <span className="text-gray-500 text-sm ml-2 dark:text-slate-400">
                     • {entry.date} at {entry.time}
                   </span>

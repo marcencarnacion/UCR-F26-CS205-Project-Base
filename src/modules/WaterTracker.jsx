@@ -18,6 +18,7 @@ import {
   isValidTimeString,
   toMilliliters,
 } from '../utils/waterUtils'
+import DemoBadge from '../components/DemoBadge'
 
 const QUICK_ADD_AMOUNTS = [8, 12, 16]
 
@@ -440,6 +441,7 @@ function WaterTracker() {
                 <div>
                   <h3 className="font-semibold text-gray-800 dark:text-slate-100">
                     {displayDate(entry.date)} · {entry.time}
+                    {entry.isDemo && <DemoBadge />}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-slate-300">
                     {formatAmount(entry.amount)} {entry.unit}
