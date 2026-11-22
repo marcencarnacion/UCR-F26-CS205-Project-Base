@@ -62,7 +62,7 @@ function DailyGraph() {
           <XAxis dataKey="time" tick={{ fill: chartText }} />
           <YAxis domain={[1, 5]} ticks={[1, 2, 3, 4, 5]} tick={{ fill: chartText }} />
           <Tooltip contentStyle={tooltipStyle} labelStyle={{ color: chartText }} />
-          <Line type="monotone" dataKey="mood" stroke="#6366f1" strokeWidth={2} name="Mood (1–5)" />
+          <Line type="monotone" dataKey="mood" stroke="var(--accent-chart-color)" strokeWidth={2} name="Mood (1–5)" />
         </LineChart>
       </ResponsiveContainer>
     </div>

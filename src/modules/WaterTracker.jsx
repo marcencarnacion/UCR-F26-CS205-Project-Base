@@ -213,7 +213,7 @@ function WaterTracker() {
           <div className="flex flex-wrap items-start justify-between gap-2">
             <div>
               <h2 className="text-sm font-medium text-gray-600 dark:text-slate-300">Water consumed today</h2>
-              <p className="mt-1 text-3xl font-bold text-sky-700 dark:text-sky-300">
+              <p className="mt-1 text-3xl font-bold text-indigo-700 dark:text-indigo-300">
                 {formatAmount(totalToday)} <span className="text-xl">{waterGoal.unit}</span>
               </p>
             </div>
@@ -231,7 +231,7 @@ function WaterTracker() {
             aria-valuetext={`${formatAmount(totalToday)} ${waterGoal.unit} of ${formatAmount(waterGoal.amount)} ${waterGoal.unit}`}
           >
             <div
-              className="h-full rounded-full bg-sky-500 transition-all"
+              className="h-full rounded-full bg-indigo-600 transition-all"
               style={{ width: `${Math.min(progressPercent, 100)}%` }}
             />
           </div>
@@ -245,7 +245,7 @@ function WaterTracker() {
           <h2 className="text-sm font-medium text-gray-600 dark:text-slate-300">
             Average daily intake
           </h2>
-          <p className="mt-1 text-3xl font-bold text-sky-700 dark:text-sky-300">
+          <p className="mt-1 text-3xl font-bold text-indigo-700 dark:text-indigo-300">
             {formatAmount(averageDaily)} {waterGoal.unit}
           </p>
           <p className="text-xs text-gray-500 dark:text-slate-400">
@@ -281,7 +281,7 @@ function WaterTracker() {
               labelFormatter={(_, payload) => payload?.[0]?.payload?.date || ''}
             />
             <ReferenceLine y={waterGoal.amount} stroke="#10b981" strokeDasharray="5 5" />
-            <Bar dataKey="total" fill="#0ea5e9" name="Water intake" />
+            <Bar dataKey="total" fill="var(--accent-chart-color)" name="Water intake" />
           </BarChart>
         </ResponsiveContainer>
       </section>
@@ -304,7 +304,7 @@ function WaterTracker() {
                 setGoalForm((current) => ({ ...current, amount: event.target.value }))
                 setGoalError('')
               }}
-              className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+              className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
             />
           </label>
           <label htmlFor="water-goal-unit" className="block text-sm font-medium text-gray-700 dark:text-slate-200">
@@ -313,7 +313,7 @@ function WaterTracker() {
               id="water-goal-unit"
               value={goalForm.unit}
               onChange={(event) => setGoalForm((current) => ({ ...current, unit: event.target.value }))}
-              className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+              className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
             >
               <option value="oz">ounces (oz)</option>
               <option value="ml">milliliters (mL)</option>
@@ -321,7 +321,7 @@ function WaterTracker() {
           </label>
           <button
             type="submit"
-            className="rounded-lg bg-sky-600 px-4 py-2 font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+            className="rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
           >
             Save Goal
           </button>
@@ -340,7 +340,7 @@ function WaterTracker() {
               key={amount}
               type="button"
               onClick={() => handleQuickAdd(amount)}
-              className="rounded-lg border border-sky-300 bg-sky-50 px-3 py-3 font-semibold text-sky-800 hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:border-sky-800 dark:bg-sky-950/40 dark:text-sky-200 dark:hover:bg-sky-900"
+              className="rounded-lg border border-indigo-300 bg-indigo-50 px-3 py-3 font-semibold text-indigo-800 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-indigo-800 dark:bg-indigo-950/40 dark:text-indigo-200 dark:hover:bg-indigo-900"
               aria-label={`Add ${amount} ounces of water`}
             >
               +{amount} oz
@@ -364,7 +364,7 @@ function WaterTracker() {
                 max={today}
                 onChange={(event) => updateForm('date', event.target.value)}
                 required
-                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
               />
             </label>
             <label htmlFor="water-time" className="block text-sm font-medium text-gray-700 dark:text-slate-200">
@@ -375,7 +375,7 @@ function WaterTracker() {
                 value={form.time}
                 onChange={(event) => updateForm('time', event.target.value)}
                 required
-                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
               />
             </label>
             <label htmlFor="water-amount" className="block text-sm font-medium text-gray-700 dark:text-slate-200">
@@ -388,7 +388,7 @@ function WaterTracker() {
                 value={form.amount}
                 onChange={(event) => updateForm('amount', event.target.value)}
                 required
-                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
               />
             </label>
             <label htmlFor="water-unit" className="block text-sm font-medium text-gray-700 dark:text-slate-200">
@@ -397,7 +397,7 @@ function WaterTracker() {
                 id="water-unit"
                 value={form.unit}
                 onChange={(event) => updateForm('unit', event.target.value)}
-                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-sky-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
               >
                 <option value="oz">ounces (oz)</option>
                 <option value="ml">milliliters (mL)</option>
@@ -408,7 +408,7 @@ function WaterTracker() {
           <div className="flex flex-col gap-2 sm:flex-row">
             <button
               type="submit"
-              className="rounded-lg bg-sky-600 px-4 py-2 font-medium text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+              className="rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
             >
               {editingId === null ? 'Save Water Entry' : 'Update Water Entry'}
             </button>
@@ -451,7 +451,7 @@ function WaterTracker() {
                   <button
                     type="button"
                     onClick={() => handleEdit(entry)}
-                    className="rounded px-3 py-1 text-sm font-medium text-sky-700 hover:bg-sky-100 focus:outline-none focus:ring-2 focus:ring-sky-500 dark:text-sky-300 dark:hover:bg-slate-600"
+                    className="rounded px-3 py-1 text-sm font-medium text-indigo-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:text-indigo-300 dark:hover:bg-slate-600"
                     aria-label={`Edit ${formatAmount(entry.amount)} ${entry.unit} entry from ${displayDate(entry.date)} at ${entry.time}`}
                   >
                     Edit

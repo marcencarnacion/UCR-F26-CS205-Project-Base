@@ -20,8 +20,7 @@ const CHARTS = {
     demoKey: 'moodDemoAverage',
     realName: 'Real mood',
     demoName: 'Demo mood',
-    realColor: '#4f46e5',
-    demoColor: '#c084fc',
+    realColor: 'var(--accent-chart-color)',
     axis: 'rating',
     type: 'line',
   },
@@ -32,8 +31,7 @@ const CHARTS = {
     demoKey: 'sleepDemoAverage',
     realName: 'Real sleep',
     demoName: 'Demo sleep',
-    realColor: '#0284c7',
-    demoColor: '#a855f7',
+    realColor: 'var(--accent-chart-color)',
     axis: 'hours',
     type: 'line',
   },
@@ -44,8 +42,7 @@ const CHARTS = {
     demoKey: 'waterDemo',
     realName: 'Real water',
     demoName: 'Demo water',
-    realColor: '#0284c7',
-    demoColor: '#a855f7',
+    realColor: 'var(--accent-chart-color)',
     axis: 'water',
     type: 'bar',
   },
@@ -56,8 +53,7 @@ const CHARTS = {
     demoKey: 'exerciseDemoMinutes',
     realName: 'Real exercise',
     demoName: 'Demo exercise',
-    realColor: '#7c3aed',
-    demoColor: '#db2777',
+    realColor: 'var(--accent-chart-color)',
     axis: 'minutes',
     type: 'bar',
   },
@@ -74,6 +70,7 @@ function StatisticsChart({ kind, data, hasObservations, includeDemo, waterUnit, 
   const { theme } = useTheme()
   const isDark = theme === 'dark'
   const chart = CHARTS[kind]
+  const demoColor = isDark ? '#2dd4bf' : '#0f766e'
   const tickColor = isDark ? '#cbd5e1' : '#4b5563'
   const gridColor = isDark ? '#475569' : '#d1d5db'
   const tooltipStyle = {
@@ -120,7 +117,7 @@ function StatisticsChart({ kind, data, hasObservations, includeDemo, waterUnit, 
           type="monotone"
           dataKey={chart.demoKey}
           name={chart.demoName}
-          stroke={chart.demoColor}
+          stroke={demoColor}
           strokeWidth={2}
           strokeDasharray="5 4"
           connectNulls={false}
@@ -148,7 +145,7 @@ function StatisticsChart({ kind, data, hasObservations, includeDemo, waterUnit, 
       <Legend />
       <Bar dataKey={chart.realKey} name={chart.realName} fill={chart.realColor} stackId={kind} />
       {includeDemo && (
-        <Bar dataKey={chart.demoKey} name={chart.demoName} fill={chart.demoColor} stackId={kind} />
+        <Bar dataKey={chart.demoKey} name={chart.demoName} fill={demoColor} stackId={kind} />
       )}
     </BarChart>
   )

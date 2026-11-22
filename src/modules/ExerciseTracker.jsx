@@ -193,12 +193,12 @@ function ExerciseTracker() {
                 setGoalError('')
               }}
               required
-              className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-violet-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+              className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
             />
           </label>
           <button
             type="submit"
-            className="rounded-lg bg-violet-600 px-4 py-2 font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+            className="rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
           >
             Save Weekly Goal
           </button>
@@ -214,7 +214,7 @@ function ExerciseTracker() {
           aria-valuetext={`${weeklyMinutes} of ${exerciseGoalMinutes} minutes`}
         >
           <div
-            className="h-full rounded-full bg-violet-500 transition-all"
+            className="h-full rounded-full bg-indigo-600 transition-all"
             style={{ width: `${Math.min(progressPercent, 100)}%` }}
           />
         </div>
@@ -230,24 +230,24 @@ function ExerciseTracker() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           <article className="rounded-lg bg-white p-5 shadow-lg transition-colors dark:bg-slate-800">
             <h3 className="text-sm font-medium text-gray-600 dark:text-slate-300">Total exercise</h3>
-            <p className="mt-1 text-3xl font-bold text-violet-700 dark:text-violet-300">{weeklyMinutes} min</p>
+            <p className="mt-1 text-3xl font-bold text-indigo-700 dark:text-indigo-300">{weeklyMinutes} min</p>
             <p className="text-xs text-gray-500 dark:text-slate-400">Last 7 days</p>
           </article>
           <article className="rounded-lg bg-white p-5 shadow-lg transition-colors dark:bg-slate-800">
             <h3 className="text-sm font-medium text-gray-600 dark:text-slate-300">Workouts</h3>
-            <p className="mt-1 text-3xl font-bold text-violet-700 dark:text-violet-300">{workoutCount}</p>
+            <p className="mt-1 text-3xl font-bold text-indigo-700 dark:text-indigo-300">{workoutCount}</p>
             <p className="text-xs text-gray-500 dark:text-slate-400">Last 7 days</p>
           </article>
           <article className="rounded-lg bg-white p-5 shadow-lg transition-colors dark:bg-slate-800">
             <h3 className="text-sm font-medium text-gray-600 dark:text-slate-300">Average workout</h3>
-            <p className="mt-1 text-3xl font-bold text-violet-700 dark:text-violet-300">
+            <p className="mt-1 text-3xl font-bold text-indigo-700 dark:text-indigo-300">
               {averageDuration === null ? '—' : `${formatNumber(averageDuration)} min`}
             </p>
             <p className="text-xs text-gray-500 dark:text-slate-400">Last 7 days</p>
           </article>
           <article className="rounded-lg bg-white p-5 shadow-lg transition-colors dark:bg-slate-800">
             <h3 className="text-sm font-medium text-gray-600 dark:text-slate-300">Total distance</h3>
-            <p className="mt-1 text-3xl font-bold text-violet-700 dark:text-violet-300">
+            <p className="mt-1 text-3xl font-bold text-indigo-700 dark:text-indigo-300">
               {totalDistanceKm === 0 ? '—' : `${formatNumber(totalDistanceKm)} km`}
             </p>
             <p className="text-xs text-gray-500 dark:text-slate-400">
@@ -274,7 +274,7 @@ function ExerciseTracker() {
                 max={today}
                 onChange={(event) => updateForm('date', event.target.value)}
                 required
-                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-violet-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
               />
             </label>
             <label htmlFor="exercise-type" className="block text-sm font-medium text-gray-700 dark:text-slate-200">
@@ -283,7 +283,7 @@ function ExerciseTracker() {
                 id="exercise-type"
                 value={form.type}
                 onChange={(event) => updateForm('type', event.target.value)}
-                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-violet-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
               >
                 {EXERCISE_TYPES.map((type) => <option key={type} value={type}>{type}</option>)}
               </select>
@@ -298,7 +298,7 @@ function ExerciseTracker() {
                 value={form.durationMinutes}
                 onChange={(event) => updateForm('durationMinutes', event.target.value)}
                 required
-                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-violet-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
               />
             </label>
             <label htmlFor="exercise-distance" className="block text-sm font-medium text-gray-700 dark:text-slate-200">
@@ -310,7 +310,7 @@ function ExerciseTracker() {
                 step="any"
                 value={form.distance}
                 onChange={(event) => updateForm('distance', event.target.value)}
-                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-violet-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
               />
             </label>
             <label htmlFor="exercise-distance-unit" className="block text-sm font-medium text-gray-700 dark:text-slate-200">
@@ -319,7 +319,7 @@ function ExerciseTracker() {
                 id="exercise-distance-unit"
                 value={form.distanceUnit}
                 onChange={(event) => updateForm('distanceUnit', event.target.value)}
-                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-violet-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
               >
                 <option value="mi">Miles</option>
                 <option value="km">Kilometers</option>
@@ -334,7 +334,7 @@ function ExerciseTracker() {
                 step="1"
                 value={form.calories}
                 onChange={(event) => updateForm('calories', event.target.value)}
-                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-violet-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+                className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
               />
             </label>
           </div>
@@ -345,14 +345,14 @@ function ExerciseTracker() {
               value={form.notes}
               onChange={(event) => updateForm('notes', event.target.value)}
               rows={3}
-              className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-violet-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
+              className="mt-1 block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:ring-2 focus:ring-indigo-500 dark:border-slate-600 dark:bg-slate-900 dark:text-slate-100"
             />
           </label>
           {entryError && <p className="text-sm text-red-600 dark:text-red-300" role="alert">{entryError}</p>}
           <div className="flex flex-col gap-2 sm:flex-row">
             <button
               type="submit"
-              className="rounded-lg bg-violet-600 px-4 py-2 font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+              className="rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
             >
               {editingId === null ? 'Save Exercise' : 'Update Exercise'}
             </button>
@@ -402,7 +402,7 @@ function ExerciseTracker() {
                   <button
                     type="button"
                     onClick={() => handleEdit(entry)}
-                    className="rounded px-3 py-1 text-sm font-medium text-violet-700 hover:bg-violet-100 focus:outline-none focus:ring-2 focus:ring-violet-500 dark:text-violet-300 dark:hover:bg-slate-600"
+                    className="rounded px-3 py-1 text-sm font-medium text-indigo-700 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:text-indigo-300 dark:hover:bg-slate-600"
                     aria-label={`Edit ${entry.type} entry from ${displayDate(entry.date)}`}
                   >
                     Edit

@@ -164,7 +164,7 @@ function FileManager() {
             <button
               type="button"
               onClick={handleGenerateDemoData}
-              className="self-end rounded-lg bg-violet-600 px-4 py-2 font-medium text-white hover:bg-violet-700 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
+              className="self-end rounded-lg bg-indigo-600 px-4 py-2 font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-slate-800"
             >
               Generate Demo Data
             </button>
@@ -178,7 +178,7 @@ function FileManager() {
               type="button"
               onClick={handleRemoveDemoData}
               disabled={!demoRecordCount}
-              className="rounded-lg border border-violet-400 px-3 py-2 text-sm font-medium text-violet-900 hover:bg-violet-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-violet-700 dark:text-violet-200 dark:hover:bg-violet-900/50"
+              className="rounded-lg border border-indigo-400 px-3 py-2 text-sm font-medium text-indigo-900 hover:bg-indigo-100 disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:border-indigo-700 dark:text-indigo-200 dark:hover:bg-indigo-900/50"
             >
               Remove Demo Data
             </button>
@@ -233,7 +233,7 @@ function FileManager() {
                   setTimeout(() => setImportSuccess(false), 3000)
                 }
               }}
-              className="flex-1 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              className="flex-1 bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-colors font-medium"
             >
               Load from File
             </button>
