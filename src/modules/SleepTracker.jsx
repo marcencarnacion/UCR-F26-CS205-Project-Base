@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useHealthData } from '../context/HealthDataContext'
 import { calculateSleepDuration, formatSleepDate, getLocalDateString } from '../utils/sleepHelpers'
 import SleepGraph from '../components/SleepGraph'
+import DemoBadge from '../components/DemoBadge'
 
 const EMPTY_FORM = {
   date: getLocalDateString(),
@@ -227,7 +228,10 @@ function SleepTracker() {
                 className="flex flex-col gap-3 rounded-lg bg-gray-50 p-4 dark:bg-slate-700 sm:flex-row sm:items-center sm:justify-between"
               >
                 <div>
-                  <h3 className="font-semibold text-gray-800 dark:text-slate-100">{formatSleepDate(entry.date)}</h3>
+                  <h3 className="font-semibold text-gray-800 dark:text-slate-100">
+                    {formatSleepDate(entry.date)}
+                    {entry.isDemo && <DemoBadge />}
+                  </h3>
                   <p className="text-sm text-gray-600 dark:text-slate-300">
                     {entry.bedtime} – {entry.wakeTime} · {Number(entry.durationHours).toFixed(2)} hours
                   </p>

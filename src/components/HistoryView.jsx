@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import { useHealthData } from '../context/HealthDataContext'
+import DemoBadge from './DemoBadge'
 
 function HistoryView() {
   const { moodEntries, deleteMoodEntry } = useHealthData()
@@ -44,6 +45,7 @@ function HistoryView() {
                         <span className="font-medium text-gray-800 dark:text-slate-100">
                           Mood: {entry.mood}
                         </span>
+                        {entry.isDemo && <DemoBadge />}
                         <span className="text-gray-500 text-sm ml-2 dark:text-slate-400">
                           • {entry.time}
                         </span>

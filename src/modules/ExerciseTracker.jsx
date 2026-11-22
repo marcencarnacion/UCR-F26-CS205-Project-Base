@@ -10,6 +10,7 @@ import {
   isValidExerciseGoal,
   toKilometers,
 } from '../utils/exerciseUtils'
+import DemoBadge from '../components/DemoBadge'
 
 function formatNumber(value) {
   return Number(value.toFixed(1)).toLocaleString(undefined, { maximumFractionDigits: 1 })
@@ -384,6 +385,7 @@ function ExerciseTracker() {
                 <div className="min-w-0">
                   <h3 className="font-semibold text-gray-800 dark:text-slate-100">
                     {displayDate(entry.date)} · {entry.type}
+                    {entry.isDemo && <DemoBadge />}
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-slate-300">
                     {entry.durationMinutes} minutes
