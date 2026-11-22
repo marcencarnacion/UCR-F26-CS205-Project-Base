@@ -10,6 +10,7 @@ import SleepTracker from './modules/SleepTracker'
 import WaterTracker from './modules/WaterTracker'
 import ExerciseTracker from './modules/ExerciseTracker'
 import MoodCalendar from './modules/MoodCalendar'
+import StatisticsDashboard from './modules/StatisticsDashboard'
 
 function AppContent() {
   const [activeTab, setActiveTab] = useState('dashboard')
@@ -73,6 +74,16 @@ function AppContent() {
                 Mood Calendar
               </button>
               <button
+                onClick={() => setActiveTab('statistics')}
+                className={`py-4 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'statistics'
+                    ? 'border-indigo-500 text-indigo-600 dark:border-indigo-400 dark:text-indigo-300'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-slate-400 dark:hover:text-slate-200 dark:hover:border-slate-600'
+                }`}
+              >
+                Statistics
+              </button>
+              <button
                 onClick={() => setActiveTab('sleep')}
                 className={`py-4 px-1 border-b-2 font-medium text-sm ${
                   activeTab === 'sleep'
@@ -131,6 +142,10 @@ function AppContent() {
 
           {activeTab === 'calendar' && (
             <MoodCalendar />
+          )}
+
+          {activeTab === 'statistics' && (
+            <StatisticsDashboard />
           )}
 
           {activeTab === 'sleep' && (
